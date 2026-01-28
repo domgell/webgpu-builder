@@ -1,0 +1,15 @@
+{
+  "name": "@domgell/webgpu-builder",
+  "version": "1.0.4",
+  "main": "src/index.ts",
+  "exports": "./src/index.ts",
+  "keywords": ["webgpu", "builder", "util"],
+  "author": "",
+  "license": "ISC",
+  "description": "Builder style creation of WebGPU objects",
+  "dependencies": {
+    "@webgpu/types": "*",
+    "@domgell/webgpu-util": "^1.0.5",
+    "@domgell/ts-util": "*"
+  }
+}
