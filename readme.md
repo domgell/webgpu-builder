@@ -31,3 +31,8 @@ const bindGroup = buildBindGroup(device)
 * RenderPipeline
 * Sampler
 * Texture
+
+## Installation
+```
+npm i @domgell/webgpu-builder
+```
