@@ -1,27 +1,27 @@
-import { RenderPipelineCreateArgs, createRenderPipeline, createRenderPipelineAsync } from "@domgell/webgpu-util"
+import {RenderPipelineCreateArgs, createRenderPipeline, createRenderPipelineAsync} from "@domgell/webgpu-util";
 
 export interface RenderPipelineBuilder {
     /**
      * Set the shader source code.
-     * 
+     *
      * Assumes the shader source contains both the vertex and fragment shaders.
-     * 
+     *
      * Pipeline layout is automatically generated based on the shader code.
      * @param source
      */
     shader(source: string): this & { shader: never },
     /**
      * Add a color target state.
-     * 
+     *
      * Multiple color target states can be added.
      * @param target
      */
-    color(target: GPUColorTargetState): this,
+    color(target?: GPUColorTargetState): this,
     /**
      * Set the depth-stencil state.
      * @param state
      */
-    depth(state: GPUDepthStencilState): this & { depth: never },
+    depth(state?: GPUDepthStencilState): this & { depth: never },
     /**
      * Set the primitive state.
      * @param state
@@ -29,7 +29,7 @@ export interface RenderPipelineBuilder {
     primitive(state: GPUPrimitiveState): this & { primitive: never },
     /**
      * Set the pipeline layout.
-     * 
+     *
      * If not set, the layout is automatically generated based on the shader code.
      * @param layout
      */
@@ -53,7 +53,7 @@ export interface RenderPipelineBuilder {
 
 /**
  * Builder-style `GPURenderPipeline` creation.
- * 
+ *
  * Example:
  * ```ts
  * const pipeline = buildRenderPipeline(device)
@@ -66,32 +66,31 @@ export interface RenderPipelineBuilder {
  */
 export function buildRenderPipeline(device: GPUDevice): RenderPipelineBuilder {
     const args = {} as RenderPipelineCreateArgs;
-    
+
     return {
         shader(source) {
             args.shader = source;
-            return this as any
+            return this as any;
         },
         color(target) {
-            args.color ??= [];
-            (args.color as GPUColorTargetState[]).push(target)
-            return this as any
+            ((args.color ??= []) as Array<GPUColorTargetState | null>).push(target ?? null);
+            return this as any;
         },
         depth(state) {
             args.depth = state;
-            return this as any
+            return this as any;
         },
         primitive(state) {
             args.primitive = state;
-            return this as any
+            return this as any;
         },
         layout(layout) {
             args.layout = layout;
-            return this as any
+            return this as any;
         },
         constants(values) {
             args.constants = values;
-            return this as any
+            return this as any;
         },
         build(label = "RenderPipeline") {
             args.label = label;
@@ -100,6 +99,6 @@ export function buildRenderPipeline(device: GPUDevice): RenderPipelineBuilder {
         buildAsync(label = "RenderPipeline") {
             args.label = label;
             return createRenderPipelineAsync(device, args);
-        }
-    }
+        },
+    };
 }

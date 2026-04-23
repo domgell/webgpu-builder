@@ -21,6 +21,11 @@ const bindGroup = buildBindGroup(device)
     .entries(cameraBuffer, screenTexture)
     .layout(layout)
     .build()
+
+const renderPass = buildRenderPass(commandEncoder)
+    .color(colorTexture, [0.65, 0.65, 0.65, 1.0])
+    .depth(depthTexture, "clear")
+    .build("RenderPass")
 ```
 
 ## Supported WebGPU object builders
